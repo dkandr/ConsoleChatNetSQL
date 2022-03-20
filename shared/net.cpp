@@ -45,7 +45,7 @@ void Net::closeConnection()
 
 void Net::Bind()
 {
-    int result = bind(socket_file_description_, (struct sockaddr*)&addr_, addr_length_);
+    int result = bind(socket_file_description_, reinterpret_cast<struct sockaddr*>(&addr_), addr_length_);
     if (result == -1)
         throw std::runtime_error(std::strerror(errno));
 }
