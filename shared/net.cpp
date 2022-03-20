@@ -64,7 +64,7 @@ void Net::Listen()
 void Net::Accept()
 {
     std::cout << "Wait client..." << std::endl;
-    connection_ = accept(socket_file_description_, (struct sockaddr*)&addr_, &addr_length_);
+    connection_ = accept(socket_file_description_, reinterpret_cast<struct sockaddr*>(&addr_), &addr_length_);
     if (connection_ == -1)
         throw std::runtime_error(std::strerror(errno));
     
@@ -76,7 +76,7 @@ void Net::Accept()
 
 void Net::Connect()
 {
-    int result = connect(socket_file_description_, (struct sockaddr*)&addr_, addr_length_);
+    int result = connect(socket_file_description_, reinterpret_cast<struct sockaddr*>(&addr_), addr_length_);
     if (result == -1)
         throw std::runtime_error(std::strerror(errno));
     
@@ -142,7 +142,7 @@ template void Net::simpleWrite<size_t>(size_t);
 template void Net::simpleWrite<Net::PacketType>(Net::PacketType);
 template <typename T> void Net::simpleWrite(T t)
 {
-    ssize_t bytes = write(connection_, (char*)&t, sizeof(t));
+    ssize_t bytes = write(connection_, reinterpret_cast<char*>(&t), sizeof(t));
     if (bytes == -1)
         throw std::runtime_error(std::strerror(errno));
 }
@@ -154,7 +154,7 @@ template void Net::simpleRead<size_t>(size_t&);
 template void Net::simpleRead<Net::PacketType>(Net::PacketType&);
 template <typename T> void Net::simpleRead(T& t)
 {
-    ssize_t bytes = read(connection_, (char*)&t, sizeof(t));
+    ssize_t bytes = read(connection_, reinterpret_cast<char*>(&t), sizeof(t));
     if (bytes == -1)
         throw std::runtime_error(std::strerror(errno));
 
