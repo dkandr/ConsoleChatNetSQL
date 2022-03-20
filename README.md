@@ -27,7 +27,7 @@
 
 ### Компиляция
 > Client:
-> g++ -Wall -g ./client/*.cpp ./shared/*.cpp -o chat_client -I./client/ -I./shared/
+> g++ -Wall -g ./client/\*.cpp ./shared/\*.cpp -o chat_client -I./client/ -I./shared/
 > 
 > Server:
-> g++ -Wall -g ./server/*.cpp ./shared/*.cpp -o chat_server -I./server/ -I./shared/ -I/usr/include/mysql/ -lmysqlclient
+> g++ -Wall -g ./server/\*.cpp ./shared/\*.cpp -o chat_server -I./server/ -I./shared/ -I/usr/include/mysql/ -lmysqlclient
