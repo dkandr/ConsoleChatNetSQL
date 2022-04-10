@@ -1,4 +1,5 @@
 #include "logger.h"
+#include <iostream>
 
 Logger::Logger(std::string& file_name)
 {
@@ -21,7 +22,7 @@ void Logger::write_message(const Message& message)
 {
     shared_mutex_.lock();
 
-    fs_ << message;
+    fs_ << message << std::endl;
 
     shared_mutex_.unlock();
 }
@@ -32,8 +33,9 @@ void Logger::read_last_message(Message& message)
 {
     shared_mutex_.lock_shared();
     
-    while (fs_ >> message)
-    {       
+    while (!fs_.eof())
+    {
+        fs_ >> message; 
     }
 
     shared_mutex_.unlock_shared();

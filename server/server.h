@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include "../shared/net.h"
+#include "../shared/logger.h"
 #include "database.h"
 
 class Server
@@ -16,7 +17,7 @@ private:
     void userRegistration(Net& net, Database& db);
 
     void sendMessages(Net& net);
-    void addMessage(Net& net, Database& db);
+    void addMessage(Net& net, Database& db, Logger& log);
     void sendAllUserNames(Net& net);
 
     std::vector<User> users_;

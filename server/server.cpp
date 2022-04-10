@@ -25,6 +25,9 @@ void Server::start()
         net.Bind();
         net.Listen();
 
+        std::string log_file_name = "log.txt";        
+        Logger log {log_file_name};
+
         //server always works
         while (true)
         {
@@ -48,7 +51,7 @@ void Server::start()
                     sendMessages(net);
                     break;               
                 case Net::PacketType::AddMessage :
-                    addMessage(net, db);
+                    addMessage(net, db, log);
                     break;               
                 case Net::PacketType::getNameUsers :
                     sendAllUserNames(net);
@@ -165,13 +168,15 @@ void Server::sendMessages(Net& net)
 
 
 
-void Server::addMessage(Net& net, Database& db)
+void Server::addMessage(Net& net, Database& db, Logger& log)
 {
     Message message;
     net.Read<Message>(message);
 
     messages_.push_back(message);
     db.addMessage(message);
+
+    log.write_message(message);
 }
 
 void Server::sendAllUserNames(Net& net)
