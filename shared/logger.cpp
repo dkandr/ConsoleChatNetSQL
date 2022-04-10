@@ -1,5 +1,4 @@
 #include "logger.h"
-#include <iostream>
 
 Logger::Logger(std::string& file_name)
 {
