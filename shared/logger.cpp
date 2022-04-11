@@ -19,11 +19,9 @@ Logger::~Logger()
 
 void Logger::write_message(const Message& message)
 {
-    shared_mutex_.lock();
-
+    std::lock_guard<std::shared_mutex> lg(shared_mutex_);
+ 
     fs_ << message << std::endl;
-
-    shared_mutex_.unlock();
 }
 
 
